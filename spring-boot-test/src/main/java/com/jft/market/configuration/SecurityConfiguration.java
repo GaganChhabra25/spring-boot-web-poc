@@ -55,7 +55,10 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.authenticationProvider(customeAuthenticationProvider)
 				.authorizeRequests()
 				.antMatchers("/api/v1/user/create").permitAll()
+				.antMatchers("/register").permitAll()
+				.antMatchers("/api/v1/user/users").permitAll()
 				.antMatchers("/static/**").permitAll()
+			/*	.antMatchers("/views*//**").permitAll()*/
 				.anyRequest().authenticated();
 		/*		.and()
 				.formLogin()

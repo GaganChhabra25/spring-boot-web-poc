@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("products_link").click(function () {
-                $.ajax({
-                    url: "/market/api/v1/product/products", success: function (result) {
-                        $("#div1").html(result);
-                    }
+    <%--    <script>
+            $(document).ready(function () {
+                $("products_link").click(function () {
+                    $.ajax({
+                        url: "/market/api/v1/product/products", success: function (result) {
+                            $("#div1").html(result);
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>--%>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -100,8 +100,8 @@
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
-                <div id="products_link"><p><a href="/market/api/v1/product/products">Products</a></p></div>
-                <div id="users_link">< <p><a href="#">Users</a></p></div>
+                <div id="products_link"><p><a href="/market/api/v1/user/users">Users</a></p></div>
+                <%-- <div id="users_link">< <p><a href="market/register">Create User</a></p></div>--%>
                 <p><a href="#">Link</a></p>
             </div>
             <div id="welcome" class="col-sm-8 text-left">

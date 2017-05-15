@@ -13,9 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jft.market.api.ApiConstants;
 import com.jft.market.api.BeanAttribute;
@@ -24,12 +25,11 @@ import com.jft.market.api.ws.RoleWS;
 import com.jft.market.api.ws.SuccessWS;
 import com.jft.market.api.ws.UserWS;
 import com.jft.market.exceptions.ExceptionConstants;
-import com.jft.market.exceptions.InvalidRequestException;
 import com.jft.market.service.UserService;
 import com.jft.market.util.Preconditions;
 
 @Slf4j
-@CrossOrigin
+/*@CrossOrigin*/
 @Controller
 public class UserApiImpl implements UserApi {
 
@@ -37,15 +37,18 @@ public class UserApiImpl implements UserApi {
 	private UserService userService;
 
 	@Override
-	public ResponseEntity createUser(@Valid @RequestBody UserWS userWS, BindingResult bindingResult) {
+	public ModelAndView createUser(@Valid @ModelAttribute UserWS userWS, BindingResult bindingResult) {
 		log.info("Validating paylaod");
 		if (bindingResult.hasErrors()) {
-			throw new InvalidRequestException(bindingResult);
+			ModelAndView modelAndView = new ModelAndView("registration");
+			modelAndView.addObject("errors", true);
+			return modelAndView;
 		}
 		log.info("Converting WS to Entity");
 		userService.convertWsToEnityAndSave(userWS);
-		BeanAttribute userBeanAttribute = new BeanAttribute(ApiConstants.getSucessId(), new SuccessWS(ApiConstants.SUCCESS), ApiConstants.REGISTRATION);
-		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);
+		ModelAndView modelAndView = new ModelAndView("registration");
+		modelAndView.addObject("success", true);
+		return modelAndView;
 	}
 
 	@Override
@@ -57,7 +60,7 @@ public class UserApiImpl implements UserApi {
 	}
 
 	@Override
-	public ResponseEntity readUsers() {
+	public ModelAndView readUsers() {
 		log.info("Reading users from database");
 		List<UserWS> users = userService.readAllUsers();
 		List<BeanAttribute> userBeanAttributes = new ArrayList<>();
@@ -65,7 +68,10 @@ public class UserApiImpl implements UserApi {
 			BeanAttribute productBeanAttribute = new BeanAttribute(userWS.getUuid(), userWS, ApiConstants.REGISTRATION);
 			userBeanAttributes.add(productBeanAttribute);
 		});
-		return new ResponseEntity(new EmberResponse<>(userBeanAttributes), HttpStatus.OK);
+		ModelAndView modelAndView = new ModelAndView("tables");
+		modelAndView.addObject("usersList", users);
+		return modelAndView;
+		//return "tables";
 	}
 
 	@Override

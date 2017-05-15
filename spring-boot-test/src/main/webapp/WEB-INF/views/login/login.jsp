@@ -43,11 +43,12 @@
     button {
         background-color: #4CAF50;
         color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
+        padding: 15px 20px;
+        margin: 6px 0;
         border: none;
         cursor: pointer;
-        width: 50%;
+        width: 23%;
+        margin-right: 86px;
     }
 
     button:hover {
@@ -79,6 +80,10 @@
         padding-top: 16px;
     }
 
+    button {
+        width: 100%;
+    }
+
     /* Change styles for span and cancel button on extra small screens */
     @media screen and (max-width: 300px) {
         span.psw {
@@ -105,9 +110,9 @@
 </c:if>
 
 <form name="login_form" action="/market/login" method="POST">
-    <%--    <div class="imgcontainer">
-            <img src="img_avatar2.png" alt="Avatar" class="avatar">
-        </div>--%>
+    <%-- <div class="imgcontainer">
+         <img src="img_avatar2.png" alt="Avatar" class="avatar">
+     </div>--%>
 
     <div class="container">
         <label><b>Username</b></label>
@@ -116,29 +121,20 @@
         <label><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="password" required>
 
-        <button name="submit" type="submit">Login</button>
-        <input type="checkbox" checked="checked"> Remember me
-    </div>
+        <div class="container">
+            <div>
+                <button name="submit" type="submit">Login</button>
+            </div>
+            <div>
+                <a href="/market/register">
+                    <button class="psw" name="submit" type="button">Register</button>
+                </a>
+            </div>
 
-    <div class="container" style="background-color:#f1f1f1">
-        <button type="button" class="cancelbtn">Cancel</button>
-        <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+
     </div>
 </form>
-<%--<form name='f' action='/market/login' method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password'/></td>
-        </tr>
-        <tr>
-            <td colspan='2'><input name="submit" type="submit" value="Login"/></td>
-        </tr>
-    </table>
-</form>--%>
+
 </body>
 </html>
