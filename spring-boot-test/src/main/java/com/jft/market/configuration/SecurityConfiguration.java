@@ -57,6 +57,7 @@ class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/v1/user/create").permitAll()
 				.antMatchers("/register").permitAll()
 				.antMatchers("/api/v1/user/users").permitAll()
+				.antMatchers("/market/homepage").permitAll()
 				.antMatchers("/static/**").permitAll()
 			/*	.antMatchers("/views*//**").permitAll()*/
 				.anyRequest().authenticated();

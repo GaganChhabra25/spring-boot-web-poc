@@ -32,9 +32,7 @@ public interface UserApi extends BaseApi {
 	@RequestMapping(value = {"{userUuid}"},
 			method = RequestMethod.GET,
 			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public
-	@ResponseBody
-	ResponseEntity readUser(@PathVariable("userUuid") String useruuid);
+	public ModelAndView readUser(@PathVariable("userUuid") String useruuid);
 
 	@RequestMapping(value = {USERS},
 			method = RequestMethod.GET,
@@ -49,17 +47,15 @@ public interface UserApi extends BaseApi {
 	ResponseEntity deleteUser(@PathVariable("userUuid") String userUuid);
 
 	@RequestMapping(value = {"update/{userUuid}"},
-			method = RequestMethod.PATCH,
-			produces = {MediaType.APPLICATION_JSON_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public
-	@ResponseBody
-	ResponseEntity updateUser(@RequestBody UserWS userWS,
-							  @PathVariable("userUuid") String userUuid);
+			method = RequestMethod.POST)
+		/*	produces = {MediaType.APPLICATION_JSON_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE})*/
+	public ModelAndView updateUser(@ModelAttribute UserWS userWS,
+								   @PathVariable("userUuid") String userUuid);
 
 
 	@RequestMapping(value = {"update/user/{userUuid}/role"},
-			method = RequestMethod.PATCH,
+			method = RequestMethod.POST,
 			produces = {MediaType.APPLICATION_JSON_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public

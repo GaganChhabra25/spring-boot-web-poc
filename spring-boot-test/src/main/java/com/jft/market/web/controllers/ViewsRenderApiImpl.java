@@ -20,8 +20,12 @@ public class ViewsRenderApiImpl implements ViewsRenderApi {
 
 	@Override
 	public String register() {
-		System.out.println("nnnnnnnnnnnnn");
 		return "registration";
+	}
+
+	@Override
+	public String editUser() {
+		return "edit_user";
 	}
 
 	@Override

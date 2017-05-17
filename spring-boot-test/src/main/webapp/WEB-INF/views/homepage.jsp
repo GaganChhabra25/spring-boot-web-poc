@@ -69,10 +69,22 @@
             padding-bottom: 0px;
             margin-top: 5px;
         }
+
     </style>
 </head>
 
 <body>
+
+<script>
+    $(document).ready(function () {
+        $("#products_link").click(function () {
+            $.get("/market/api/v1/user/users?isAjax=true", function (data, status) {
+                $('#welcome').html(data);
+            });
+        });
+    });
+</script>
+
 <div class=wraper>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -100,7 +112,7 @@
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
-                <div id="products_link"><p><a href="/market/api/v1/user/users">Users</a></p></div>
+                <div id="products_link"><p><a href="javascript:void(0);">Users</a></p></div>
                 <%-- <div id="users_link">< <p><a href="market/register">Create User</a></p></div>--%>
                 <p><a href="#">Link</a></p>
             </div>

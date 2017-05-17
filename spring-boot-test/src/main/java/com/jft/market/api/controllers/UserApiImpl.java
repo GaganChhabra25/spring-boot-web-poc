@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import com.jft.market.api.ws.SuccessWS;
 import com.jft.market.api.ws.UserWS;
 import com.jft.market.exceptions.ExceptionConstants;
 import com.jft.market.service.UserService;
+import com.jft.market.util.AppUtil;
 import com.jft.market.util.Preconditions;
 
 @Slf4j
@@ -35,6 +37,9 @@ public class UserApiImpl implements UserApi {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private HttpServletRequest httpServletRequest;
 
 	@Override
 	public ModelAndView createUser(@Valid @ModelAttribute UserWS userWS, BindingResult bindingResult) {
@@ -52,11 +57,12 @@ public class UserApiImpl implements UserApi {
 	}
 
 	@Override
-	public ResponseEntity readUser(@PathVariable("userUuid") String userUuid) {
+	public ModelAndView readUser(@PathVariable("userUuid") String userUuid) {
 		log.info("Reading user from database");
 		UserWS userWS = userService.readUser(userUuid);
-		BeanAttribute userBeanAttribute = new BeanAttribute(userWS.getUuid(), userWS, ApiConstants.REGISTRATION);
-		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);
+		ModelAndView modelAndView = new ModelAndView("edit_user");
+		modelAndView.addObject("user", userWS);
+		return modelAndView;
 	}
 
 	@Override
@@ -68,10 +74,15 @@ public class UserApiImpl implements UserApi {
 			BeanAttribute productBeanAttribute = new BeanAttribute(userWS.getUuid(), userWS, ApiConstants.REGISTRATION);
 			userBeanAttributes.add(productBeanAttribute);
 		});
-		ModelAndView modelAndView = new ModelAndView("tables");
-		modelAndView.addObject("usersList", users);
-		return modelAndView;
-		//return "tables";
+		if (AppUtil.isAjax(httpServletRequest)) {
+			ModelAndView modelAndView = new ModelAndView("users");
+			modelAndView.addObject("usersList", users);
+			return modelAndView;
+		} else {
+			ModelAndView modelAndView = new ModelAndView("template/users");
+			modelAndView.addObject("usersList", users);
+			return modelAndView;
+		}
 	}
 
 	@Override
@@ -82,11 +93,15 @@ public class UserApiImpl implements UserApi {
 	}
 
 	@Override
-	public ResponseEntity updateUser(@RequestBody UserWS userWS, @PathVariable("userUuid") String userUuid) {
+	public ModelAndView updateUser(@ModelAttribute UserWS userWS, @PathVariable("userUuid") String userUuid) {
 		userService.validateUserWS(userWS);
 		userService.updateUser(userWS, userUuid);
-		BeanAttribute userBeanAttribute = new BeanAttribute(userUuid, new SuccessWS(ApiConstants.SUCCESS), ApiConstants.REGISTRATION);
-		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);
+		ModelAndView modelAndView = new ModelAndView("edit_user");
+		modelAndView.addObject("success", true);
+		return modelAndView;
+
+	/*	BeanAttribute userBeanAttribute = new BeanAttribute(userUuid, new SuccessWS(ApiConstants.SUCCESS), ApiConstants.REGISTRATION);
+		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);*/
 	}
 
 	@Override

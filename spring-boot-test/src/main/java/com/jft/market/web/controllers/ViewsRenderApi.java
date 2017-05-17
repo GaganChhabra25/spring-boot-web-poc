@@ -12,6 +12,7 @@ public interface ViewsRenderApi {
 	String LOGIN_FAILED = "loginFailed";
 	String HOMEPAGE = "homepage";
 	String REGISTER = "register";
+	String EDIT_USER = "editUser";
 
 	@RequestMapping(value = {HOMEPAGE}, method = RequestMethod.GET)
 	public String homePage();
@@ -21,5 +22,8 @@ public interface ViewsRenderApi {
 
 	@RequestMapping(value = {REGISTER}, method = RequestMethod.GET)
 	public String register();
+
+	@RequestMapping(value = {EDIT_USER}, method = RequestMethod.GET)
+	public String editUser();
 
 }
