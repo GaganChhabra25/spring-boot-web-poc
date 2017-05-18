@@ -14,12 +14,25 @@
 --%>
 <script>
 
-    function update(uuid) {
-        alert(uuid);
-        $.post("/market/api/v1/user/update/" + uuid, function (data, status) {
-            $('#editUserForm').html(data);
-        });
+    function update() {
+        var phone = $('#phone').val();
+        var fname = $('#fname').val();
+        var lname = $('#lname').val();
+        var email = $('#email').val();
 
+        $.ajax({
+            type: "POST",
+            url: "/market/api/v1/user/update/" + localStorage.getItem('uuid'),
+            data: {
+                "phone": phone,
+                "fname": fname,
+                "lname": lname,
+                "email": email
+            },
+            success: function (result) {
+                $('#editUserForm').html(result);
+            }
+        });
     }
 
 </script>
@@ -35,35 +48,36 @@
 
     <c:if test="${not empty errors}">
     <div class="alert alert-danger">
-        Error in updating user information.
+        <strong>Error!</strong> Please provide valid user information.
     </div>
     </c:if>
 
 
     <form class="form-horizontal">
-        
+
         <div class="form-group">
             <label class="control-label col-sm-2" for="fname">First name:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="fname" value="${user.fname}" name="fname">
+                <input type="text" size="70%" class="form-control" id="fname" value="${user.fname}" name="fname">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="lname">Last name:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="lname" value="${user.lname}" name="lname">
+                <input type="text" size="70%" class="form-control" id="lname" value="${user.lname}" name="lname">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="email">Email:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" value="${user.email}" name="email">
+                <input type="email" size="70%" class="form-control" id="email" value="${user.email}" name="email"
+                       disabled>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-2" for="phone">Phone number:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="phone" value="${user.phone}" name="phone">
+                <input type="text" size="20%" class="form-control" id="phone" value="${user.phone}" name="phone">
             </div>
         </div>
 
@@ -78,7 +92,7 @@
                 </div>--%>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn btn-default" onclick=update('${user.uuid}')>Save</button>
+                <button type="button" class="btn btn-default" onclick=update()>Save</button>
             </div>
         </div>
 

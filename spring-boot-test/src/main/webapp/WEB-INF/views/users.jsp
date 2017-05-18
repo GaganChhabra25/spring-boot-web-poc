@@ -17,6 +17,9 @@
     function edit(uuid) {
         $.get("/market/api/v1/user/" + uuid, function (data, status) {
             $('#users').html(data);
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem('uuid', uuid);
+            }
         });
 
     }

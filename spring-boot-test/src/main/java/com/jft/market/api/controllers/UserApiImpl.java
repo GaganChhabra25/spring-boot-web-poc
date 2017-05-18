@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,14 +95,20 @@ public class UserApiImpl implements UserApi {
 
 	@Override
 	public ModelAndView updateUser(@ModelAttribute UserWS userWS, @PathVariable("userUuid") String userUuid) {
-		userService.validateUserWS(userWS);
+		if (userWS == null
+				|| StringUtils.isEmpty(userWS.getLname())
+				|| StringUtils.isEmpty(userWS.getFname())
+				|| userWS.getPhone() == null) {
+			ModelAndView modelAndView = new ModelAndView("edit_user");
+			modelAndView.addObject("errors", true);
+			modelAndView.addObject("user", userWS);
+			return modelAndView;
+		}
 		userService.updateUser(userWS, userUuid);
 		ModelAndView modelAndView = new ModelAndView("edit_user");
 		modelAndView.addObject("success", true);
+		modelAndView.addObject("user", userWS);
 		return modelAndView;
-
-	/*	BeanAttribute userBeanAttribute = new BeanAttribute(userUuid, new SuccessWS(ApiConstants.SUCCESS), ApiConstants.REGISTRATION);
-		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);*/
 	}
 
 	@Override
