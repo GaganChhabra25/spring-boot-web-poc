@@ -87,10 +87,11 @@ public class UserApiImpl implements UserApi {
 	}
 
 	@Override
-	public ResponseEntity deleteUser(@PathVariable("userUuid") String userUuid) {
+	public ModelAndView deleteUser(@PathVariable("userUuid") String userUuid) {
 		userService.deleteUser(userUuid);
-		BeanAttribute userBeanAttribute = new BeanAttribute(userUuid, new SuccessWS(ApiConstants.SUCCESS), ApiConstants.REGISTRATION);
-		return new ResponseEntity(new EmberResponse<>(userBeanAttribute), HttpStatus.OK);
+		ModelAndView modelAndView = new ModelAndView("users");
+		modelAndView.addObject("success", true);
+		return modelAndView;
 	}
 
 	@Override

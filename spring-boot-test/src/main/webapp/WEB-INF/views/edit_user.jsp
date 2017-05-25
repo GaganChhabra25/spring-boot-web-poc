@@ -12,6 +12,26 @@
 </head>
 <body>
 --%>
+<style>
+    .control-label {
+        margin-left: -90px;
+    }
+
+    .btn {
+        margin-left: -85px;
+    }
+
+    hr {
+
+        margin-top: 0.5em;
+        margin-bottom: 2em;
+        margin-left: auto;
+        margin-right: auto;
+        border-style: ridge;
+
+    }
+</style>
+
 <script>
 
     function update() {
@@ -39,6 +59,8 @@
 
 <div id="editUserForm" class="container">
     <h2>Edit user</h2>
+
+    <hr>
 
     <c:if test="${not empty success}">
     <div class="alert alert-success">

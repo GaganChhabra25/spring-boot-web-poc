@@ -18,12 +18,16 @@ import com.jft.market.api.ws.Roles;
 import com.jft.market.model.Role;
 import com.jft.market.model.User;
 import com.jft.market.repository.UserRepository;
+import com.jft.market.service.UserService;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private UserService userService;
 
 
 	@Override
@@ -42,7 +46,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				roles.add(grantedAuthority.getAuthority());
 			});
 
-			if (user.getEmail().equals(email) && user.getPassword().equals(password) && roles.contains(Roles.ROLE_USER.getName())) {
+			if (user.getEmail().equals(email) &&
+					user.getPassword().equals(password) &&
+					roles.contains(Roles.ROLE_USER.getName()) &&
+					userService.isValidUser(user)) {
 				return new UsernamePasswordAuthenticationToken(email, password, authorities);
 			}
 		}
