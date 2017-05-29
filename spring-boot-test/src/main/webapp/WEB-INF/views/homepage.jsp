@@ -7,6 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/homepage-left-panel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <%--    <script>
@@ -70,6 +72,11 @@
             margin-top: 5px;
         }
 
+        .btn-primary {
+            color: #fff;
+            background-color: #337ABE;
+        }
+
     </style>
 </head>
 
@@ -78,7 +85,19 @@
 <script>
     $(document).ready(function () {
         $("#products_link").click(function () {
-            $.get("/market/api/v1/user/users?isAjax=true", function (data, status) {
+            $.get("/market/api/v1/user/users", function (data, status) {
+                $('#welcome').html(data);
+            });
+        });
+
+        $("#add").click(function () {
+            $.get("/market/product", function (data, status) {
+                $('#welcome').html(data);
+            });
+        });
+
+        $("#category").click(function () {
+            $.get("/market/category", function (data, status) {
                 $('#welcome').html(data);
             });
         });
@@ -112,10 +131,43 @@
     <div class="container-fluid text-center">
         <div class="row content">
             <div class="col-sm-2 sidenav">
+
                 <div id="products_link"><p><a href="javascript:void(0);">Users</a></p></div>
-                <%-- <div id="users_link">< <p><a href="market/register">Create User</a></p></div>--%>
-                <p><a href="#">Link</a></p>
+
+                <p><a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+                      aria-controls="collapseExample">
+                    Product
+                </a></p>
+
+                <div class="collapse" id="collapseExample">
+                    <div id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="card">
+
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a id="add" data-toggle="collapse" data-parent="#accordion"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Add
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div class="card-header" role="tab" id="headingOne">
+                                <h5 class="mb-0">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Edit
+                                    </a>
+                                </h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="category"><p><a>Category</a></p></div>
             </div>
+
+
             <div id="welcome" class="col-sm-8 text-left">
                 <h1>Welcome</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore

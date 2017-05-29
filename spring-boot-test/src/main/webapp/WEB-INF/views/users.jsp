@@ -33,11 +33,55 @@
             }
         });
     }
+
+    function search() {
+        var input, filter, table, tr, td, i, tableBody;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        console.log(filter);
+        table = document.getElementById("table");
+        console.log(table);
+        tableBody = document.getElementById("body"); //table.getElementsByTagName("tr");
+        console.log(tableBody);
+        tr = tableBody.getElementsByTagName("tr");
+        console.log(tr);
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            console.log(td);
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
 </script>
+
+<style>
+    #search {
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 30%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+</style>
 
 
 <div id="users" class="container">
     <h2>Users</h2>
+
+    <input type="text" id="search" onkeyup="search()" placeholder="Search for names.." title="Type in a name">
 
     <c:if test="${not empty success}">
         <div class="alert alert-success">
@@ -65,7 +109,7 @@
 
         </tr>
         </thead>
-        <tbody>
+        <tbody id="body">
         <c:forEach items="${usersList}" var="user" varStatus="counter">
             <tr id="userToDelete">
                 <td> ${counter.count}</td>

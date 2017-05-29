@@ -13,6 +13,8 @@ public interface ViewsRenderApi {
 	String HOMEPAGE = "homepage";
 	String REGISTER = "register";
 	String EDIT_USER = "editUser";
+	String PRODUCT = "product";
+	String CATEGORY = "category";
 
 	@RequestMapping(value = {HOMEPAGE}, method = RequestMethod.GET)
 	public String homePage();
@@ -25,5 +27,11 @@ public interface ViewsRenderApi {
 
 	@RequestMapping(value = {EDIT_USER}, method = RequestMethod.GET)
 	public String editUser();
+
+	@RequestMapping(value = {PRODUCT}, method = RequestMethod.GET)
+	public String createProduct();
+
+	@RequestMapping(value = {CATEGORY}, method = RequestMethod.GET)
+	public String createCategory();
 
 }

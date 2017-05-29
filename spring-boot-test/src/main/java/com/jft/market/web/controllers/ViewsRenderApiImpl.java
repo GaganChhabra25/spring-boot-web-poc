@@ -29,6 +29,16 @@ public class ViewsRenderApiImpl implements ViewsRenderApi {
 	}
 
 	@Override
+	public String createProduct() {
+		return "product";
+	}
+
+	@Override
+	public String createCategory() {
+		return "category";
+	}
+
+	@Override
 	/*@PreAuthorize("hasRole('ROLE_USER')")*/
 	public String homePage() {
 		return "homepage";
