@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.jft.market.api.ws.ErrorWS;
@@ -24,6 +25,7 @@ import com.jft.market.exceptions.ExceptionConstants;
 import com.jft.market.exceptions.InternalApiException;
 import com.jft.market.exceptions.InvalidRequestException;
 import com.jft.market.exceptions.VantivPaymnetException;
+import com.jft.market.util.AppUtil;
 
 @RestControllerAdvice
 @ControllerAdvice
@@ -66,8 +68,9 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 	}
 
 	@ExceptionHandler({InternalApiException.class})
-	protected ResponseEntity<Object> handleInternalApiException(RuntimeException e) {
-		return new ResponseEntity(new ErrorWS(e.getMessage(), HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+	protected ModelAndView handleInternalApiException(RuntimeException e) {
+		InternalApiException internalApiException = (InternalApiException) e;
+		return AppUtil.errorModal(internalApiException.getMessage());
 	}
 
 	@ExceptionHandler({VantivPaymnetException.class})

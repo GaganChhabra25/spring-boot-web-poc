@@ -134,6 +134,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public void updateCategory(CategoryWS categoryWS, String uuid) {
 		Category category = categoryRepository.findByUuid(uuid);
 		Preconditions.check(category == null, ExceptionConstants.CATEGORY_NOT_FOUND);
+/*		Preconditions.check(categoryWS.getName().toLowerCase().equals(category.getName().toLowerCase()), ExceptionConstants.CATEGORY_ALREADY_EXIST_WITH_THIS_NAME);*/
 		category.setName(categoryWS.getName());
 		category.setDescription(categoryWS.getDescription());
 		saveCategory(category);

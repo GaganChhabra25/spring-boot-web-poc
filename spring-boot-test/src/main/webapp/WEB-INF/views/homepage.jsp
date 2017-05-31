@@ -96,8 +96,28 @@
             });
         });
 
-        $("#category").click(function () {
+        $("#addCateory").click(function () {
             $.get("/market/category", function (data, status) {
+                $('#welcome').html(data);
+            });
+        });
+
+
+        $("#subCategory").click(function () {
+            $.get("/market/subcategory", function (data, status) {
+                $('#welcome').html(data);
+            });
+        });
+
+
+        /*  $("#editCategory").click(function () {
+         $.get("/market/editcategory", function (data, status) {
+         $('#welcome').html(data);
+         });
+         });*/
+
+        $("#viewCategories").click(function () {
+            $.get("/market/categories", function (data, status) {
                 $('#welcome').html(data);
             });
         });
@@ -164,7 +184,56 @@
                         </div>
                     </div>
                 </div>
-                <div id="category"><p><a>Category</a></p></div>
+
+                <p><a class="btn btn-primary" data-toggle="collapse" href="#categorycollapse" aria-expanded="false"
+                      aria-controls="collapseExample">
+                    Category
+                </a></p>
+
+                <div class="collapse" id="categorycollapse">
+                    <div id="categoryList" role="tablist" aria-multiselectable="true">
+                        <div class="card">
+
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a id="addCateory" data-toggle="collapse" data-parent="#accordion"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Add Category
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a id="subCategory" data-toggle="collapse" data-parent="#accordion"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Add subcategory
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a id="viewCategories" data-toggle="collapse" data-parent="#accordion"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        View Categories
+                                    </a>
+                                </h5>
+                            </div>
+
+                            <div class="card-header" role="tab">
+                                <h5 class="mb-0">
+                                    <a id="editCategory" data-toggle="collapse" data-parent="#accordion"
+                                       aria-expanded="true" aria-controls="collapseOne">
+                                        Edit category
+                                    </a>
+                                </h5>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <%--   <div id="category"><p><a>Category</a></p></div>--%>
             </div>
 
 

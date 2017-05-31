@@ -2,6 +2,7 @@ package com.jft.market.web.controllers;
 
 
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,6 +16,9 @@ public interface ViewsRenderApi {
 	String EDIT_USER = "editUser";
 	String PRODUCT = "product";
 	String CATEGORY = "category";
+	String CATEGORIES = "categories";
+	String SUBCATEGORY = "subcategory";
+	String EDIT_CATEGORY = "editCategory";
 
 	@RequestMapping(value = {HOMEPAGE}, method = RequestMethod.GET)
 	public String homePage();
@@ -34,4 +38,12 @@ public interface ViewsRenderApi {
 	@RequestMapping(value = {CATEGORY}, method = RequestMethod.GET)
 	public String createCategory();
 
+	@RequestMapping(value = {SUBCATEGORY}, method = RequestMethod.GET)
+	public ModelAndView createSubCategory();
+
+	@RequestMapping(value = {"editCategory/{uuid}"}, method = RequestMethod.GET)
+	public ModelAndView editCategory(@PathVariable("uuid") String uuid);
+
+	@RequestMapping(value = {CATEGORIES}, method = RequestMethod.GET)
+	public ModelAndView viewCategories();
 }

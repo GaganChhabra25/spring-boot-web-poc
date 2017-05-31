@@ -9,20 +9,26 @@
 <script>
 
     function edit(uuid) {
-        $.get("/market/api/v1/user/" + uuid, function (data, status) {
-            $('#users').html(data);
-            ''
+        $.ajax({
+            type: "GET",
+            url: "/market/editCategory/" + uuid,
+            success: function (result) {
+                $('#categories').html(result);
+                if (typeof(Storage) !== "undefined") {
+                    localStorage.setItem('uuid', uuid);
+                }
+            }
         });
     }
 
-    function deleteUser(r, uuid) {
+    function deleteCategory(r, uuid) {
         $.ajax({
             type: "DELETE",
-            url: "/market/api/v1/user/delete/" + uuid,
+            url: "/market/api/v1/category/delete/" + uuid,
             success: function (result) {
                 $('.modal').modal('hide');
-                $.get("/market/api/v1/user/users", function (data, status) {
-                    $('#users').html(data);
+                $.get("/market/api/v1/category/categories", function (data, status) {
+                    $('#categories').html(data);
                 });
                 /*   // $('#userToDelete').html(result);
                  var i = r.parentNode.parentNode.rowIndex;
@@ -76,10 +82,10 @@
 </style>
 
 
-<div id="users" class="container">
-    <h2>Users</h2>
+<div id="categories" class="container">
+    <h2>Categories</h2>
 
-    <input type="text" id="search" onkeyup="search()" placeholder="Search for names.." title="Type in a name">
+    <input type="text" id="search" onkeyup="search()" placeholder="Search for category names.." title="Type in a name">
 
     <c:if test="${not empty success}">
         <div class="alert alert-success">
@@ -94,41 +100,35 @@
     </c:if>
 
     <p></p>
-    <%--    <p>The length of the companies collection is : ${fn:length(usersList)}</p>
-        <c:when test="${fn:length(usersList) gt 0}">--%>
+
     <table id="table" class="table">
         <thead>
         <tr>
             <th>S.No</th>
             <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
             <th>Action</th>
-
         </tr>
         </thead>
         <tbody id="body">
-        <c:forEach items="${usersList}" var="user" varStatus="counter">
+        <c:forEach items="${categories}" var="category" varStatus="counter">
             <tr id="userToDelete">
                 <td> ${counter.count}</td>
-                <td>${user.fname} ${user.lname}</td>
-                <td>${user.phone}</td>
-                <td>${user.email}</td>
+                <td>${category.name}</td>
                 <td>
                         <%--  <button id="edit" type="button" class="btn btn-primary" onclick=edit('${user.uuid}')>Edit</button>--%>
-                    <button id="edit" type="button" class="btn btn-default btn-sm" onclick=edit('${user.uuid}')
+                    <button id="edit" type="button" class="btn btn-default btn-sm" onclick="edit('${category.uuid}')"
                             data-toggle="tooltip" data-placement="top" title="Edit">
                         <span class="glyphicon glyphicon-edit"></span>
                     </button>
 
                     <button id="delete" type="button"
                             class="btn btn-default btn-sm" data-toggle="modal"
-                            data-target="#confirm-delete-${user.uuid}"
+                            data-target="#confirm-delete-${category.uuid}"
                             data-toggle="tooltip" data-placement="top" title="Delete">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
 
-                    <div class="modal" id="confirm-delete-${user.uuid}" tabindex="-1" role="dialog"
+                    <div class="modal" id="confirm-delete-${category.uuid}" tabindex="-1" role="dialog"
                          aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -140,7 +140,7 @@
                                 </div>
 
                                 <div class="modal-body">
-                                    <p>You are about to delete user.</p>
+                                    <p>You are about to delete category.</p>
                                     <p>Do you want to proceed?</p>
                                     <p class="debug-url"></p>
                                 </div>
@@ -148,8 +148,8 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                                     <button type="button" class="btn btn-primary"
-                                            onclick=" deleteUser($(
-                                                    '#delete'), '${user.uuid}')">Delete
+                                            onclick=" deleteCategory($(
+                                                    '#delete'), '${category.uuid}')">Delete
                                     </button>
                                         <%--  <a class="btn btn-danger btn-ok" data-dismiss="modal"
                                              onclick="deleteUser($('#delete'), '${user.uuid}')">Delete</a>--%>

@@ -26,7 +26,7 @@
         var description = $('#description').val();
         $.ajax({
             type: "POST",
-            url: "/market/api/v1/category/create",
+            url: "/market/api/v1/category/update/" + localStorage.getItem('uuid'),
             data: {
                 "name": name,
                 "description": description
@@ -42,7 +42,7 @@
 </script>
 
 <div id="category" class="container">
-    <h2>Add Category</h2>
+    <h2>Edit Category</h2>
 
     <hr>
     <div id="messages"></div>
@@ -52,13 +52,14 @@
         <div class="form-group">
             <label class="control-label col-sm-3" for="name">Category name:</label>
             <div class="col-sm-8">
-                <input type="text" size="70%" class="form-control" id="name" name="name">
+                <input type="text" size="70%" class="form-control" id="name" name="name" value="${category.name}">
             </div>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-3" for="description">Description:</label>
             <div class="col-sm-8">
-                <input type="text" size="70%" class="form-control" id="description" name="description">
+                <input type="text" size="70%" class="form-control" id="description" name="description"
+                       value="${category.description}">
             </div>
         </div>
         <%--     <div class="form-group">
@@ -81,7 +82,7 @@
 
     </form>
 </div>
-    <%--</div>
+<%--</div>
 
-    </body>
-    </html>--%>
+</body>
+</html>--%>
