@@ -1,18 +1,5 @@
 package com.jft.market.service;
 
-import static com.jft.market.model.QCategory.category1;
-
-import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jft.market.api.ws.CategoryWS;
 import com.jft.market.exceptions.ExceptionConstants;
 import com.jft.market.model.Category;
@@ -22,6 +9,17 @@ import com.jft.market.util.Preconditions;
 import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Predicate;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
+import java.util.UUID;
+
+import static com.jft.market.model.QCategory.category1;
 
 @Service("subCategoryService")
 public class SubCategoryServiceImpl implements SubCategoryService {
@@ -41,7 +39,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		Category parentCategory = categoryService.readCategoryByUuid(categoryUuid);
 		Category childCategory = categoryService.findCategoryByName(subCategoryWS.getName());
 		Preconditions.check(parentCategory == null, ExceptionConstants.PLEASE_CREATE_CATEGORY);
-		Preconditions.check(childCategory != null, ExceptionConstants.CATEGORY_ALREADY_EXIST);
+		Preconditions.check(childCategory != null, ExceptionConstants.CATEGORY_ALREADY_EXIST_WITH_THIS_NAME);
 		return associateParentCategoryWithSubCategory(parentCategory, subCategoryWS);
 	}
 

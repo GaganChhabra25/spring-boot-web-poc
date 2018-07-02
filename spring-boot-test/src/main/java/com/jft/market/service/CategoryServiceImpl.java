@@ -35,7 +35,10 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public String createCategory(CategoryWS categoryWS) {
 		Category category = findCategoryByName(categoryWS.getName());
-		Preconditions.check(category != null, ExceptionConstants.CATEGORY_ALREADY_EXIST);
+		// If category with same name found AND category is deleted/not enabled, just enable the same category with latest description
+		if ((category != null && !isValidCategory(category))) {
+			updateCategory(categoryWS, category.getUuid());
+		}
 		category = convertWsToEntity(categoryWS);
 		saveCategory(category);
 		return category.getUuid();

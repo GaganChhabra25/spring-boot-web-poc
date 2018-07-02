@@ -11,17 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../static/homepage-left-panel.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <%--    <script>
-            $(document).ready(function () {
-                $("products_link").click(function () {
-                    $.ajax({
-                        url: "/market/api/v1/product/products", success: function (result) {
-                            $("#div1").html(result);
-                        }
-                    });
-                });
-            });
-        </script>--%>
+
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
         .navbar {
@@ -108,13 +98,6 @@
                 $('#welcome').html(data);
             });
         });
-
-
-        /*  $("#editCategory").click(function () {
-         $.get("/market/editcategory", function (data, status) {
-         $('#welcome').html(data);
-         });
-         });*/
 
         $("#viewCategories").click(function () {
             $.get("/market/categories", function (data, status) {
@@ -217,15 +200,6 @@
                                     <a id="viewCategories" data-toggle="collapse" data-parent="#accordion"
                                        aria-expanded="true" aria-controls="collapseOne">
                                         View Categories
-                                    </a>
-                                </h5>
-                            </div>
-
-                            <div class="card-header" role="tab">
-                                <h5 class="mb-0">
-                                    <a id="editCategory" data-toggle="collapse" data-parent="#accordion"
-                                       aria-expanded="true" aria-controls="collapseOne">
-                                        Edit category
                                     </a>
                                 </h5>
                             </div>

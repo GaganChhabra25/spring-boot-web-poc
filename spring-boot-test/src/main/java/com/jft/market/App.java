@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfigur
 
 @SpringBootApplication(exclude = SpringDataWebAutoConfiguration.class)
 public class App {
-
 	public static void main(String args[]) {
 		SpringApplication.run(App.class, args);
 	}
